@@ -41,7 +41,7 @@ class YouTubeTranscriptBot:
             
             response = session.post(ts_url, params=params, data=json.dumps(payload))
             text_data = response.json()['actions'][0]['updateEngagementPanelAction']['content']['transcriptRenderer']['content']['transcriptSearchPanelRenderer']['body']['transcriptSegmentListRenderer']['initialSegments']
-            return ' '.join([i['transcriptSegmentRenderer']['snippet']['runs'][0]['text'] for i in text_data])
+            return ' '.join([i['transcriptSegmentRenderer']['snippet']['runs'][0]['text'] for i in text_data if 'runs' in i['transcriptSegmentRenderer']['snippet']])
 
     def send_tg(self, chat_id, message):
         url = f'https://api.telegram.org/bot{self.tg_key}/sendMessage'
